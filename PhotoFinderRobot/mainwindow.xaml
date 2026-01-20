@@ -1,0 +1,325 @@
+<Window x:Class="PhotoFinderRobot.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Photo Organizer Robot" 
+        Height="600" Width="800"
+        MinHeight="500" MinWidth="600"
+        WindowStartupLocation="CenterScreen"
+        Background="#1a1a2e"
+        >
+    
+    <Window.Resources>
+        <!-- Color Palette -->
+        <Color x:Key="PrimaryColor">#6c63ff</Color>
+        <Color x:Key="PrimaryHoverColor">#5a52d5</Color>
+        <Color x:Key="SecondaryColor">#00d9ff</Color>
+        <Color x:Key="BackgroundColor">#1a1a2e</Color>
+        <Color x:Key="CardColor">#16213e</Color>
+        <Color x:Key="InputColor">#0f3460</Color>
+        <Color x:Key="TextColor">#e8e8e8</Color>
+        <Color x:Key="TextMutedColor">#8892b0</Color>
+        <Color x:Key="SuccessColor">#00c853</Color>
+        <Color x:Key="DangerColor">#ff5252</Color>
+        
+        <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}"/>
+        <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource SecondaryColor}"/>
+        <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}"/>
+        <SolidColorBrush x:Key="CardBrush" Color="{StaticResource CardColor}"/>
+        <SolidColorBrush x:Key="InputBrush" Color="{StaticResource InputColor}"/>
+        <SolidColorBrush x:Key="TextBrush" Color="{StaticResource TextColor}"/>
+        <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMutedColor}"/>
+        <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}"/>
+        <SolidColorBrush x:Key="DangerBrush" Color="{StaticResource DangerColor}"/>
+
+        <!-- Modern Button Style -->
+        <Style x:Key="ModernButton" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="20,12"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="{StaticResource PrimaryHoverColor}"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Browse Button Style -->
+        <Style x:Key="BrowseButton" TargetType="Button" BasedOn="{StaticResource ModernButton}">
+            <Setter Property="Background" Value="{StaticResource InputBrush}"/>
+            <Setter Property="Padding" Value="16,12"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                CornerRadius="0,8,8,0"
+                                Padding="{TemplateBinding Padding}"
+                                BorderBrush="{StaticResource SecondaryBrush}"
+                                BorderThickness="2,2,2,2">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource PrimaryBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Cancel Button Style -->
+        <Style x:Key="CancelButton" TargetType="Button" BasedOn="{StaticResource ModernButton}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                CornerRadius="8"
+                                Padding="{TemplateBinding Padding}"
+                                BorderBrush="{StaticResource DangerBrush}"
+                                BorderThickness="2">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource DangerBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Modern TextBox Style -->
+        <Style x:Key="ModernTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="{StaticResource InputBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+            <Setter Property="CaretBrush" Value="{StaticResource SecondaryBrush}"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="14,12"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="8,0,0,8">
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                          VerticalAlignment="Center"
+                                          Padding="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource SecondaryBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- ListBox Style -->
+        <Style x:Key="ModernListBox" TargetType="ListBox">
+            <Setter Property="Background" Value="{StaticResource CardBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontFamily" Value="Cascadia Code, Consolas, Courier New"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="12"
+                                Padding="{TemplateBinding Padding}">
+                            <ScrollViewer>
+                                <ItemsPresenter/>
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="LogListBoxItem" TargetType="ListBoxItem">
+            <Setter Property="Foreground" Value="{StaticResource TextMutedBrush}"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border Padding="{TemplateBinding Padding}" 
+                                Background="Transparent"
+                                CornerRadius="4">
+                            <ContentPresenter/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,30">
+            <TextBlock Text="📷 Photo Organizer Robot" 
+                       FontFamily="Segoe UI"
+                       FontSize="32" 
+                       FontWeight="Bold"
+                       Foreground="{StaticResource TextBrush}"/>
+            <TextBlock Text="Organize your photos and videos by date taken" 
+                       FontFamily="Segoe UI"
+                       FontSize="14" 
+                       Foreground="{StaticResource TextMutedBrush}"
+                       Margin="0,8,0,0"/>
+        </StackPanel>
+
+        <!-- Input Section -->
+        <StackPanel Grid.Row="1" Margin="0,0,0,20">
+            <!-- Source Folder -->
+            <TextBlock Text="SOURCE FOLDER" 
+                       FontFamily="Segoe UI"
+                       FontSize="11" 
+                       FontWeight="Bold"
+                       Foreground="{StaticResource SecondaryBrush}"
+                       Margin="0,0,0,8"/>
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Name="RootFolderTextBox" 
+                         Style="{StaticResource ModernTextBox}"
+                         VerticalAlignment="Stretch"/>
+                <Button Grid.Column="1" 
+                        Content="📁 Browse" 
+                        Style="{StaticResource BrowseButton}"
+                        Click="OnBrowseSourceClicked"/>
+            </Grid>
+
+            <!-- Destination Folder -->
+            <TextBlock Text="DESTINATION FOLDER" 
+                       FontFamily="Segoe UI"
+                       FontSize="11" 
+                       FontWeight="Bold"
+                       Foreground="{StaticResource SecondaryBrush}"
+                       Margin="0,0,0,8"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Name="DestinationFolderTextBox" 
+                         Style="{StaticResource ModernTextBox}"
+                         VerticalAlignment="Stretch"/>
+                <Button Grid.Column="1" 
+                        Content="📁 Browse" 
+                        Style="{StaticResource BrowseButton}"
+                        Click="OnBrowseDestinationClicked"/>
+            </Grid>
+        </StackPanel>
+
+        <!-- Log Section -->
+        <Grid Grid.Row="2" Margin="0,0,0,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <Grid Grid.Row="0" Margin="0,0,0,8">
+                <TextBlock Text="ACTIVITY LOG" 
+                           FontFamily="Segoe UI"
+                           FontSize="11" 
+                           FontWeight="Bold"
+                           Foreground="{StaticResource SecondaryBrush}"/>
+                <TextBlock Name="StatusText"
+                           HorizontalAlignment="Right"
+                           FontFamily="Segoe UI"
+                           FontSize="11" 
+                           Foreground="{StaticResource TextMutedBrush}"/>
+            </Grid>
+            
+            <ListBox Name="LogListBox" 
+                     Grid.Row="1"
+                     Style="{StaticResource ModernListBox}"
+                     ItemContainerStyle="{StaticResource LogListBoxItem}"
+                     ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+        </Grid>
+
+        <!-- Action Buttons -->
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Progress indicator -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Name="ProgressText" 
+                           FontFamily="Segoe UI"
+                           FontSize="13" 
+                           Foreground="{StaticResource TextMutedBrush}"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <Button Grid.Column="1" 
+                    Name="StartButton"
+                    Content="▶  Start Organizing" 
+                    Style="{StaticResource ModernButton}"
+                    Click="OnStartFindClicked"
+                    Margin="0,0,12,0"/>
+            
+            <Button Grid.Column="2" 
+                    Name="CancelButton"
+                    Content="⏹  Cancel" 
+                    Style="{StaticResource CancelButton}"
+                    Click="OnCancelClicked"
+                    IsEnabled="False"
+                    Margin="0,0,12,0"/>
+            
+            <Button Grid.Column="3" 
+                    Content="✕  Close" 
+                    Style="{StaticResource CancelButton}"
+                    Click="OnClosedClicked"
+                    IsCancel="True"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,7 @@
+<Application x:Class="PhotoFinderRobot.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="mainwindow.xaml">
+    <Application.Resources>
+    </Application.Resources>
+</Application>
